@@ -10,20 +10,23 @@
       <li v-for="(forecast,index) in weatherData.list" :key="index">
         <h3>{{ forecast.dt|formatDate }}</h3>
         <!-- TODO: Make weather summary be in a child component. -->
-        <div v-for="(weatherSummary,index) in forecast.weather" :key="index" class="weatherSummary">
+        <weather-summary v-bind:weatherData="forecast.weather"></weather-summary>
+        <!-- <div v-for="(weatherSummary,index) in forecast.weather" :key="index" class="weatherSummary">
             <img v-bind:src="'http://openweathermap.org/img/w/' + weatherSummary.icon + '.png'" v-bind:alt="weatherSummary.main">
             <br>
             <b>{{ weatherSummary.main }}</b>
-        </div>
+        </div> -->
         <!-- TODO: Make dl of weather data be in a child component. -->
-        <dl>
+        <weather-conditions v-bind:conditions="forecast.main"></weather-conditions>
+
+        <!-- <dl>
             <dt>Humidity</dt>
             <dd>{{ forecast.main.humidity }}%</dd>
             <dt>High</dt>
             <dd>{{ forecast.main.temp_max }}&deg;F</dd>
             <dt>Low</dt>
             <dd>{{ forecast.main.temp_min }}&deg;F</dd>
-        </dl>
+        </dl> -->
       </li>
     </ul>
     <div v-else-if="errors.length > 0">
@@ -40,6 +43,9 @@
 
 <script>
 import axios from 'axios';
+import {API} from '@/common/api';
+import WeatherSummary from '@/components/WeatherSummary'
+import WeatherConditions from '@/components/WeatherConditions'
 
 export default {
   name: 'Forecast',
@@ -52,11 +58,16 @@ export default {
   },
   created () {
     // TODO: Improve base config for API
-    axios.get('//api.openweathermap.org/data/2.5/forecast', {
+    // axios.get('//api.openweathermap.org/data/2.5/forecast', {
+    //   params: {
+    //       id: this.$route.params.cityId,
+    //       units: 'imperial',
+    //       APPID: '929563d37fd0452ebae9f421022a2a3d'
+    //   }
+    // })
+    API.get('forecast', {
       params: {
           id: this.$route.params.cityId,
-          units: 'imperial',
-          APPID: 'YOUR_APPID_HERE'
       }
     })
     .then(response => {
@@ -88,6 +99,10 @@ export default {
       //let year = date.getFullYear();
       return `${ months[month] } ${ daynum } @ ${ hour }`;
     }
+  },
+  components: {
+    'weather-summary': WeatherSummary,
+    'weather-conditions': WeatherConditions
   }
 }
 </script>
