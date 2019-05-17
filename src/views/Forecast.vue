@@ -29,23 +29,21 @@
         </dl> -->
       </li>
     </ul>
-    <div v-else-if="errors.length > 0">
+    <!-- <div v-else-if="errors.length > 0">
       <h2>There was an error fetching weather data.</h2>
       <ul class="errors">
         <li v-for="(error,index) in errors" :key="index">{{ error }}</li>
       </ul>
-    </div>
-    <div v-else>
-      <h2>Loading...</h2>
-    </div>
+    </div> -->
+    <error-list v-bind:errorList="errors"></error-list>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
 import {API} from '@/common/api';
-import WeatherSummary from '@/components/WeatherSummary'
-import WeatherConditions from '@/components/WeatherConditions'
+import WeatherSummary from '@/components/WeatherSummary';
+import WeatherConditions from '@/components/WeatherConditions';
+import ErrorList from '@/components/ErrorList';
 
 export default {
   name: 'Forecast',
@@ -102,18 +100,19 @@ export default {
   },
   components: {
     'weather-summary': WeatherSummary,
-    'weather-conditions': WeatherConditions
+    'weather-conditions': WeatherConditions,
+    'error-list': ErrorList
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.errors li {
+/* .errors li {
   color: red;
   border: solid red 1px;
   padding: 5px;
-}
+} */
 h1, h2 {
   font-weight: normal;
 }
@@ -134,7 +133,7 @@ li {
 a {
   color: #42b983;
 }
-.weatherSummary {
+/* .weatherSummary {
   display: inline-block;
   width: 100px;
 }
@@ -156,7 +155,7 @@ dd {
 }
 dt::after {
   content: ":";
-}
+} */
 </style>
 
 

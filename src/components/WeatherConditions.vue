@@ -2,7 +2,7 @@
   <div>
     <dl>
       <dt v-if="conditions.temp != conditions.temp_min">Current Temperature</dt>
-      <dd v-if="conditions.temp != conditions.temp_min">{{ conditions.temp }}%</dd>
+      <dd v-if="conditions.temp != conditions.temp_min">{{ conditions.temp }}&deg;F</dd>
       <dt>Humidity</dt>
       <dd>{{ conditions.humidity }}%</dd>
       <dt>High</dt>
