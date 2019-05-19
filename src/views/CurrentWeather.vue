@@ -6,33 +6,9 @@
       <router-link v-bind:to="{ name: 'Forecast', params: { cityId: $route.params.cityId } }">View 5-Day Forecast</router-link>
     </p>
     <div v-if="weatherData && errors.length===0">
-
-      <!-- TODO: Make weather summary be in a child component. -->
       <weather-summary v-bind:weatherData="weatherData.weather"></weather-summary>
-      <!-- <div v-for="(weatherSummary,index) in weatherData.weather" :key="index" class="weatherSummary">
-          <img v-bind:src="'http://openweathermap.org/img/w/' + weatherSummary.icon + '.png'" v-bind:alt="weatherSummary.main">
-          <br>
-          <b>{{ weatherSummary.main }}</b>
-      </div> -->
-      <!-- TODO: Make dl of weather data be in a child component. -->
       <weather-conditions v-bind:conditions="weatherData.main"></weather-conditions>
-      <!-- <dl>
-          <dt>Current Temp</dt>
-          <dd>{{ weatherData.main.temp }}&deg;F</dd>
-          <dt>Humidity</dt>
-          <dd>{{ weatherData.main.humidity }}%</dd>
-          <dt>High</dt>
-          <dd>{{ weatherData.main.temp_max }}&deg;F</dd>
-          <dt>Low</dt>
-          <dd>{{ weatherData.main.temp_min }}&deg;F</dd>
-      </dl> -->
     </div>
-    <!-- <div v-else-if="errors.length > 0">
-      <h2>There was an error fetching weather data.</h2>
-      <ul class="errors">
-        <li v-for="(error,index) in errors" :key="index">{{ error }}</li>
-      </ul>
-    </div> -->
     <error-list v-bind:errorList="errors"></error-list>
   </div>
 </template>
@@ -53,14 +29,6 @@ export default {
     }
   },
   created () {
-    // TODO: Improve base config for API
-    // axios.get('//api.openweathermap.org/data/2.5/weather', {
-    //   params: {
-    //       id: this.$route.params.cityId,
-    //       units: 'imperial',
-    //       APPID: '929563d37fd0452ebae9f421022a2a3d'
-    //   }
-    // })
        API.get('weather', {
         params: {
             id: this.$route.params.cityId,
@@ -81,17 +49,10 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/* .errors li {
-  color: red;
-  border: solid red 1px;
-  padding: 5px;
-} */
 h1, h2 {
   font-weight: normal;
 }
-
 ul {
   list-style-type: none;
   padding: 0;
@@ -103,29 +64,7 @@ li {
   border: solid 1px #e8e8e8;
   padding: 10px;
 }
-/* .weatherSummary {
-  display: inline-block;
-  width: 100px;
-}
-dl {
-  padding: 5px;
-  background: #e8e8e8;
-}
-dt {
-  float: left;
-  clear: left;
-  width: 120px;
-  text-align: right;
-  font-weight: bold;
-  color: blue;
-}
-dd {
-  margin: 0 0 0 130px;
-  padding: 0 0 0.5em 0;
-}
-dt::after {
-  content: ":";
-} */
+
 a {
   color: #42b983;
 }
